@@ -1,17 +1,17 @@
 # es-curator-cron
 
-Elasticsearch v6 Curator Logstash indices retention cron job
+Elasticsearch v7 Curator Logstash indices retention cron job
 
 ### Run
 
 Docker Swarm stack:
 
 ```yaml
-version: "3.3"
+version: "3.7"
 
 services:
   curator:
-    image: stefanprodan/es-curator-cron
+    image: lexpredict/es-curator-cron:latest
     environment:
       - "PERIOD=15min"
       - "KEEP_DAYS=30"
