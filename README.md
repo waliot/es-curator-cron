@@ -1,6 +1,8 @@
 # es-curator-cron
 
 Elasticsearch v7 Curator Logstash indices retention cron job
+based on: https://github.com/stefanprodan/es-curator-cron
+
 
 ### Run
 
