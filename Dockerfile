@@ -1,4 +1,6 @@
-FROM python:3.7-alpine3.7
+FROM python:3.8-alpine
+
+MAINTAINER Ivan Muratov, binakot@gmail.com
 
 LABEL elasticsearch-curator=5.8.1
 
