@@ -26,7 +26,7 @@ $ docker run \
     -e PERIOD="hourly" \
     -e KEEP_DAYS="30" \
     -e INDEX_PREFIX="logstash" \
-    -e INDEX_PATTERN="[prefix-]%Y.%m.%d" \
+    -e INDEX_PATTERN="logstash-%Y.%m.%d" \
     -d binakot/es-curator-cron:latest \
     "--host elasticsearch --port 9200"
 ```
@@ -43,7 +43,7 @@ services:
       - PERIOD: 'hourly'
       - KEEP_DAYS: '30'
       - INDEX_PREFIX: 'logstash'
-      - INDEX_PATTERN: '[prefix-]%Y.%m.%d'
+      - INDEX_PATTERN: 'logstash-%Y.%m.%d'
     command: '--host elasticsearch --port 9200'
 ```
 
@@ -52,3 +52,27 @@ services:
 Based on [https://github.com/stefanprodan/es-curator-cron](https://github.com/stefanprodan/es-curator-cron).
 
 Forked from [https://github.com/LexPredict/es-curator-cron](https://github.com/LexPredict/es-curator-cron).
+
+---
+
+# Debug commands
+
+Print out all indices from elasticsearch.
+
+```bash
+/usr/local/bin/curator_cli \
+    --host elasticsearch \
+    --port 9200 \
+    show_indices
+```
+
+Remove all indices older than one month.
+
+```bash
+/usr/local/bin/curator_cli \
+    --host elasticsearch \
+    --port 9200 \
+    delete_indices \
+    --ignore_empty_list \
+    --filter_list '[{"filtertype":"age","source":"name","direction":"older","unit":"days","unit_count":30,"timestring":"logstash-%Y.%m.%d"},{"filtertype":"pattern","kind":"prefix","value":"logstash"}]'
+```
